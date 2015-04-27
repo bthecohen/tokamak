@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Tokamak : A programmatic PHP DOM rendering library with simple one-way data flow">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Tokamak</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/bthecohen/tokamak">View on GitHub</a>
+
+          <h1 id="project_title">Tokamak</h1>
+          <h2 id="project_tagline">A programmatic PHP DOM rendering library with simple one-way data flow</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/bthecohen/tokamak/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/bthecohen/tokamak/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="tokamak" class="anchor" href="#tokamak" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tokamak</h1>
+
+<h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>Tokamak is a PHP library for programmatic DOM templating. It provides an abstraction over PHP's DOMDocument API, presenting a simple DSL for defining both templates and reusable components. This interface emphasizes unidirectional, top-down data flow and is (loosely) inspired by React.js. Unlike React, this library is used for stateless server-side rendering; therefore, elements in Tokamak are stateless, and are only rendered once.</p>
+
+<p>Note: Tokamak is in the early stages of development and is not yet suitable for production usage. However, if its approach interests you, please do try it out and provide feedback.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="documents" class="anchor" href="#documents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documents</h3>
+
+<p>You can create an HTML template by extending Tokamak's HTMLClass and providing an implementation of the render method:</p>
+
+<div class="highlight highlight-PHP"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Tokamak\Dom\HTMLDocument</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">SimpleTemplate</span> <span class="pl-k">extends</span> <span class="pl-e">HTMLDocument</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">function</span> <span class="pl-en">render</span>()</span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">        <span class="pl-smi">$html</span> <span class="pl-k">=</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>html<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1">            <span class="pl-smi">$head</span> <span class="pl-k">=</span> <span class="pl-smi">$html</span><span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>head<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1">                <span class="pl-smi">$head</span><span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>title<span class="pl-pds">'</span></span>, <span class="pl-c1">null</span>, <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">data</span>[<span class="pl-s"><span class="pl-pds">'</span>title<span class="pl-pds">'</span></span>]); <span class="pl-c">// data passed in via constructor</span></span>
+<span class="pl-s1">            <span class="pl-smi">$h1</span> <span class="pl-k">=</span> <span class="pl-smi">$html</span><span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>body<span class="pl-pds">'</span></span>)</span>
+<span class="pl-s1">                            <span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>h1<span class="pl-pds">'</span></span>, <span class="pl-c1">null</span>, <span class="pl-s"><span class="pl-pds">'</span>Test Document<span class="pl-pds">'</span></span>); <span class="pl-c">// supports method chaining</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">}</span></pre></div>
+
+<p>Then, you can pass in data when constructing an instance, and output it to an HTML string:</p>
+
+<div class="highlight highlight-PHP"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$t</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">SimpleTemplate</span>(<span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>title<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Example<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$t</span><span class="pl-k">-&gt;</span>toString();</span></pre></div>
+
+<p>Which will result in the following HTML being output:</p>
+
+<div class="highlight highlight-HTML"><pre>&lt;!DOCTYPE html&gt;
+&lt;<span class="pl-ent">html</span>&gt;
+&lt;<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">title</span>&gt;Example&lt;/<span class="pl-ent">title</span>&gt;
+&lt;<span class="pl-ent">meta</span> <span class="pl-e">charset</span>=<span class="pl-s"><span class="pl-pds">"</span>UTF-8<span class="pl-pds">"</span></span>&gt;
+&lt;/<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">body</span>&gt;&lt;<span class="pl-ent">h1</span>&gt;Test Document&lt;/<span class="pl-ent">h1</span>&gt;&lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;</pre></div>
+
+<h3>
+<a id="components" class="anchor" href="#components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Components</h3>
+
+<p>In addition to document templates, Tokamak lets you create custom components. Components are reusable pieces of
+DOM that can be used to implement widgets and page partials. Like documents, their data is passed to them by
+their parent elements.</p>
+
+<p>Much like a Document, you create a component by extending Tokamak's Component class and implementing the internal render method:</p>
+
+<div class="highlight highlight-PHP"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Tokamak\Dom\Component</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">Head</span> <span class="pl-k">extends</span> <span class="pl-e">Component</span> {</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">function</span> <span class="pl-en">render</span>(){</span>
+<span class="pl-s1">        <span class="pl-smi">$head</span> <span class="pl-k">=</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>head<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1">        <span class="pl-smi">$head</span><span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>title<span class="pl-pds">'</span></span>, <span class="pl-c1">null</span>, <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">data</span>[<span class="pl-s"><span class="pl-pds">'</span>title<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s1">        <span class="pl-smi">$head</span><span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>meta<span class="pl-pds">'</span></span>, <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>charset<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">dom</span><span class="pl-k">-&gt;</span><span class="pl-smi">encoding</span>));</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
+<p>You can append a component class to a Document or to another Component via the <code>appendComponent</code> method:</p>
+
+<div class="highlight highlight-PHP"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Tokamak\Dom\HTMLDocument</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">DocumentWithComponent</span> <span class="pl-k">extends</span> <span class="pl-e">HTMLDocument</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">function</span> <span class="pl-en">render</span>()</span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">        <span class="pl-smi">$body</span> <span class="pl-k">=</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>html<span class="pl-pds">'</span></span>)</span>
+<span class="pl-s1">                <span class="pl-k">-&gt;</span>appendComponent(<span class="pl-s"><span class="pl-pds">'</span>Head<span class="pl-pds">'</span></span>, <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">data</span>)</span>
+<span class="pl-s1">                <span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>body<span class="pl-pds">'</span></span>, <span class="pl-c1">null</span>);</span>
+<span class="pl-s1">                    <span class="pl-smi">$body</span><span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>h1<span class="pl-pds">'</span></span>, <span class="pl-c1">null</span>, <span class="pl-s"><span class="pl-pds">'</span>Test Document<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">}</span></pre></div>
+
+<p>Now, we've abstracted the <code>&lt;head&gt;</code> element as a reusable component. Rendering the document gives us the following:</p>
+
+<div class="highlight highlight-HTML"><pre>&lt;!DOCTYPE html&gt;
+&lt;<span class="pl-ent">html</span>&gt;
+&lt;<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">title</span>&gt;Example&lt;/<span class="pl-ent">title</span>&gt;
+&lt;<span class="pl-ent">meta</span> <span class="pl-e">charset</span>=<span class="pl-s"><span class="pl-pds">"</span>UTF-8<span class="pl-pds">"</span></span>&gt;
+&lt;/<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">body</span>&gt;&lt;<span class="pl-ent">h1</span>&gt;Test Document&lt;/<span class="pl-ent">h1</span>&gt;&lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;</pre></div>
+
+<h3>
+<a id="closures" class="anchor" href="#closures" aria-hidden="true"><span class="octicon octicon-link"></span></a>Closures</h3>
+
+<p>In addition to method chaining, Tokamak supports using closures as callbacks in order to append multiple levels of elements with one method call. This is useful for adding multiple nodes to a child node, and obviates the need for assigning nodes to intermediate variables. The following example produces the same output as the above template:</p>
+
+<div class="highlight highlight-PHP"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Tokamak\Dom\HTMLDocument</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">ExampleDocumentWithClosures</span> <span class="pl-k">extends</span> <span class="pl-e">HTMLDocument</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">function</span> <span class="pl-en">render</span>()</span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">        <span class="pl-smi">$data</span> <span class="pl-k">=</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">data</span>;</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>html<span class="pl-pds">'</span></span>, <span class="pl-c1">null</span>, <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() <span class="pl-k">use</span> (<span class="pl-smi">$data</span>){</span>
+<span class="pl-s1">            <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>appendComponent(<span class="pl-s"><span class="pl-pds">'</span>Head<span class="pl-pds">'</span></span>, <span class="pl-smi">$data</span>);</span>
+<span class="pl-s1">        })</span>
+<span class="pl-s1">        <span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>body<span class="pl-pds">'</span></span>, <span class="pl-c1">null</span>, <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){</span>
+<span class="pl-s1">            <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>appendElement(<span class="pl-s"><span class="pl-pds">'</span>h1<span class="pl-pds">'</span></span>, <span class="pl-c1">null</span>, <span class="pl-s"><span class="pl-pds">'</span>Test Document<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1">        });;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
+<p>Note in the above example that any data must be explicitly passed to the closure.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Install via Composer, by adding a dependency on <code>tokamak/tokamak</code> to your composer.json file or by running</p>
+
+<pre><code>composer require tokamak/tokamak
+</code></pre>
+
+<p>on the command line in your project directory.</p>
+
+<h2>
+<a id="limitationsplanned-features" class="anchor" href="#limitationsplanned-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Limitations/Planned Features</h2>
+
+<ul>
+<li>I plan to implement selector methods to access descendant nodes.</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Tokamak maintained by <a href="https://github.com/bthecohen">bthecohen</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
