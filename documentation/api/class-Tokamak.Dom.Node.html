@@ -115,7 +115,7 @@
 
 				<b>Throws:</b>
 				RuntimeException<br>
-			<b>Located at</b> <a href="source-class-Tokamak.Dom.Node.html#8-155" title="Go to source code">Dom/Node.php</a>
+			<b>Located at</b> <a href="source-class-Tokamak.Dom.Node.html#9-172" title="Go to source code">Dom/Node.php</a>
 		<br>
 	</div>
 
@@ -135,7 +135,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_append">#</a>
-		<code><a href="source-class-Tokamak.Dom.Node.html#35-45" title="Go to source code">append</a>( <span><code><a href="class-Tokamak.Dom.Node.html">Tokamak\Dom\Node</a></code> <var>$node</var></span> )</code>
+		<code><a href="source-class-Tokamak.Dom.Node.html#36-46" title="Go to source code">append</a>( <span><code><a href="class-Tokamak.Dom.Node.html">Tokamak\Dom\Node</a></code> <var>$node</var></span> )</code>
 
 		<div class="description short">
 			<p>Append one Node instance as a child of another.
@@ -184,7 +184,7 @@ appends children to the top-level DOMDocument instance.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_appendElement">#</a>
-		<code><a href="source-class-Tokamak.Dom.Node.html#47-58" title="Go to source code">appendElement</a>( <span>string <var>$name</var></span>, <span>array <var>$attributes</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$content</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tokamak.Dom.Node.html#48-66" title="Go to source code">appendElement</a>( <span>string <var>$name</var></span>, <span>array <var>$attributes</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$content</var> = <span class="php-quote">''</span></span>, <span>Closure <var>$callback</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Syntactic sugar for constructing and then appending a new Element.
@@ -205,6 +205,9 @@ Abstracts away the need to pass the ancestor DOMDocument to the child.</p>
                          For "class", the value can also be an array of class names.</p></dd>
 					<dt><var>$content</var></dt>
 					<dd>The text content of the element.</dd>
+					<dt><var>$callback</var></dt>
+					<dd><p>A callback closure to be executed within the context of the child node.
+                         Allows a callback-chaining style for building the DOM tree.</p></dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -230,7 +233,7 @@ Abstracts away the need to pass the ancestor DOMDocument to the child.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_appendComponent">#</a>
-		<code><a href="source-class-Tokamak.Dom.Node.html#60-85" title="Go to source code">appendComponent</a>( <span>string <var>$name</var></span>, <span>array <var>$data</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-Tokamak.Dom.Node.html#68-102" title="Go to source code">appendComponent</a>( <span>string <var>$name</var></span>, <span>array <var>$data</var> = <span class="php-keyword1">null</span></span>, <span>Closure <var>$callback</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Syntactic sugar for constructing and then appending a new Component.
@@ -255,6 +258,9 @@ class.</p>
                      or the name of a Component class in the Tokamak\Dom\Components namespace.</p></dd>
 					<dt><var>$data</var></dt>
 					<dd>Array of arbitrary data/state to be passed to the component</dd>
+					<dt><var>$callback</var></dt>
+					<dd><p>A callback closure to be executed within the context of the child node.
+                         Allows a callback-chaining style for building the DOM tree.</p></dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -284,7 +290,7 @@ class.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setDom">#</a>
-		<code><a href="source-class-Tokamak.Dom.Node.html#87-94" title="Go to source code">setDom</a>( <span>DOMDocument <var>$dom</var></span> )</code>
+		<code><a href="source-class-Tokamak.Dom.Node.html#104-111" title="Go to source code">setDom</a>( <span>DOMDocument <var>$dom</var></span> )</code>
 
 		<div class="description short">
 			<p>Inject an DOMDocument element as the ancestor of this node.</p>
@@ -319,7 +325,7 @@ class.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getDom">#</a>
-		<code><a href="source-class-Tokamak.Dom.Node.html#96-103" title="Go to source code">getDom</a>( )</code>
+		<code><a href="source-class-Tokamak.Dom.Node.html#113-120" title="Go to source code">getDom</a>( )</code>
 
 		<div class="description short">
 			<p>Get the underlying DOMDocument ancestor instance.</p>
@@ -353,7 +359,7 @@ class.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addDomNode">#</a>
-		<code><a href="source-class-Tokamak.Dom.Node.html#105-116" title="Go to source code">addDomNode</a>( <span>DOMNode <var>$node</var></span> )</code>
+		<code><a href="source-class-Tokamak.Dom.Node.html#122-133" title="Go to source code">addDomNode</a>( <span>DOMNode <var>$node</var></span> )</code>
 
 		<div class="description short">
 			<p>Add a DOMNode to the queue of nodes that will
@@ -390,7 +396,7 @@ be appended to this node's parent.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getDomNode">#</a>
-		<code><a href="source-class-Tokamak.Dom.Node.html#118-131" title="Go to source code">getDomNode</a>( )</code>
+		<code><a href="source-class-Tokamak.Dom.Node.html#135-148" title="Go to source code">getDomNode</a>( )</code>
 
 		<div class="description short">
 			<p>Remove a DOMNode from the queue of nodes
@@ -426,7 +432,7 @@ to be appended to the parent and return it.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_hasDomNodes">#</a>
-		<code><a href="source-class-Tokamak.Dom.Node.html#133-144" title="Go to source code">hasDomNodes</a>( )</code>
+		<code><a href="source-class-Tokamak.Dom.Node.html#150-161" title="Go to source code">hasDomNodes</a>( )</code>
 
 		<div class="description short">
 			<p>Does this instance have remaining DOMNode instances
@@ -462,7 +468,7 @@ to be appended to the parent?</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_render">#</a>
-		<code><a href="source-class-Tokamak.Dom.Node.html#146-154" title="Go to source code">render</a>( )</code>
+		<code><a href="source-class-Tokamak.Dom.Node.html#163-171" title="Go to source code">render</a>( )</code>
 
 		<div class="description short">
 			<p>Called by constructor.
@@ -510,7 +516,7 @@ or via calls to Node::append.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Tokamak.Dom.Node.html#18-22" title="Go to source code"><var>$COMPONENT_NAMESPACE</var></a>
+				<a href="source-class-Tokamak.Dom.Node.html#19-23" title="Go to source code"><var>$COMPONENT_NAMESPACE</var></a>
 
 			<div class="description short">
 				<p>Tokamak will look for components in this namespace if they are not
@@ -537,7 +543,7 @@ defined elsewhere.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Tokamak.Dom.Node.html#24-28" title="Go to source code"><var>$dom</var></a>
+				<a href="source-class-Tokamak.Dom.Node.html#25-29" title="Go to source code"><var>$dom</var></a>
 
 			<div class="description short">
 				<p>The underlying DOMDocument instance.
@@ -564,7 +570,7 @@ Normally created by Tokamak\Dom\Document instance.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Tokamak.Dom.Node.html#30-33" title="Go to source code"><var>$domNodes</var></a>
+				<a href="source-class-Tokamak.Dom.Node.html#31-34" title="Go to source code"><var>$domNodes</var></a>
 
 			<div class="description short">
 				<p>Queue of dom nodes to be appended to the parent node.</p>

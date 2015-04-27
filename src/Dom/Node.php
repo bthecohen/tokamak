@@ -160,11 +160,6 @@ abstract class Node
 		return !$this->domNodes->isEmpty();
 	}
 
-	protected final function renderCallback(Closure $callback){
-		$boundCallback = $callback->bindTo($this, $this);
-		$boundCallback();
-	}
-
 	/**
 	 * Called by constructor.
 	 * Must be implemented to define the DOM structure
