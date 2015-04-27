@@ -86,7 +86,7 @@ class DocumentWithComponent extends HTMLDocument
 		$body = $this->appendElement('html')
 			    ->appendComponent('Head', $this->data)
 				->appendElement('body', null);
-					$body->appendElement('h1', null, 'This one has a component.');
+					$body->appendElement('h1', null, 'Test Document');
 
 	}
 
