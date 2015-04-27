@@ -133,6 +133,16 @@ class ExampleDocumentWithClosures extends HTMLDocument
 
 Note in the above example that any data must be explicitly passed to the closure.
 
+## Installation
+
+Install via Composer, by adding a dependency on `tokamak/tokamak` to your composer.json file or by running
+
+```
+composer require tokamak/tokamak
+```
+
+on the command line in your project directory.
+
 ## Limitations/Planned Features
 
 * I plan to implement selector methods to access descendant nodes.
