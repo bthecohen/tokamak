@@ -2,7 +2,6 @@
     "name": "tokamak/tokamak",
     "description": "A programmatic DOM rendering library with simple one-way data flow",
     "license": "MIT",
-    "version": "0.1.0-dev",
     "authors": [
         {
             "name": "Ben Cohen",
