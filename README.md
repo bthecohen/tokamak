@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Tokamak is a PHP library for programmatic DOM templating. It provides an abstraction over PHP's DOMDocument API, presenting a simple DSL for defining both templates and reusable components. This interface emphasizes unidirectional, top-down data flow and is (loosely) inspired by React.js.
+Tokamak is a PHP library for programmatic DOM templating. It provides an abstraction over PHP's DOMDocument API, presenting a simple DSL for defining both templates and reusable components. This interface emphasizes unidirectional, top-down data flow and is (loosely) inspired by React.js. Unlike React, this library is used for stateless server-side rendering; therefore, elements in Tokamak are stateless, and are only rendered once.
 
 Note: Tokamak is in the early stages of development and is not yet suitable for production usage. However, if its approach interests you, please do try it out and provide feedback.
 
@@ -31,7 +31,7 @@ class SimpleTemplate extends HTMLDocument
 }
 ```
 
-Then, you can pass in data/state when constructing an instance, and output it to an HTML string:
+Then, you can pass in data when constructing an instance, and output it to an HTML string:
 
 ```PHP
 <?php
@@ -55,7 +55,7 @@ Which will result in the following HTML being output:
 ### Components
 
 In addition to document templates, Tokamak lets you create custom components. Components are reusable pieces of
-DOM that can be used to implement widgets and page partials. Like documents, their state/data is passed to them by
+DOM that can be used to implement widgets and page partials. Like documents, their data is passed to them by
 their parent elements.
 
 Much like a Document, you create a component by extending Tokamak's Component class and implementing the internal render method:
