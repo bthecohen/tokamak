@@ -1,6 +1,7 @@
 <?php
 include_once(__DIR__ . '/../vendor/autoload.php');
 include_once(__DIR__ . '/classes/TestDocument.php');
+include_once(__DIR__ . '/classes/TestDocumentClosures.php');
 include_once(__DIR__ . '/classes/TestComponent.php');
 
 
@@ -10,15 +11,7 @@ include_once(__DIR__ . '/classes/TestComponent.php');
  */
 class HTMLDocumentTest extends PHPUnit_Framework_TestCase {
 
-	/**
-	 * Test the output of an example Document class, including
-	 * multiple elements and a custom component.
-	 */
-	public function testE2ERendering(){
-		$template = new TestDocument(array("title" => "Example"));
-		$template->setFormatOutput(true);
-		$html =  $template->toString();
-		$expected =
+	public static $expectedHTML =
 <<<HTML
 <!DOCTYPE html>
 <html>
@@ -31,7 +24,26 @@ class HTMLDocumentTest extends PHPUnit_Framework_TestCase {
 
 HTML;
 
-		$this->assertEquals($expected, $html, 'HTML output should match expected output.');
+	/**
+	 * Test the output of an example Document class, including
+	 * multiple elements and a custom component.
+	 */
+	public function testE2ERendering(){
+		$template = new TestDocument(array("title" => "Example"));
+		$template->setFormatOutput(true);
+		$html =  $template->toString();
+		$this->assertEquals(self::$expectedHTML, $html, 'HTML output should match expected output.');
+	}
+
+	/**
+	 * Test the output of an example Document class, including
+	 * multiple elements and a custom component.
+	 */
+	public function testRenderingWithClosures(){
+		$template = new TestDocumentClosures(array("title" => "Example"));
+		$template->setFormatOutput(true);
+		$html =  $template->toString();
+		$this->assertEquals(self::$expectedHTML, $html, 'HTML output should match expected output when using closures in addition to method chaining.');
 	}
 
 }

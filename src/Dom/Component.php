@@ -2,6 +2,7 @@
 namespace Tokamak\Dom;
 use DOMDocument;
 use DOMNode;
+use Closure;
 
 /**
  * Class Component
@@ -61,7 +62,11 @@ abstract class Component extends Node {
 				// Add the dom nodes to the queue for the parent element to append.
 				$this->addDomNode($child->getDomNode());
 			}
+			if(isset($callback)){
+				$child->renderCallback($callback);
+			}
 		}
+
 		return $child;
 	}
 

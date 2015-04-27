@@ -1,7 +1,8 @@
 <?php
 namespace Tokamak\Dom;
 
-use \DOMDocument;
+use DOMDocument;
+use Closure;
 
 /**
  * Class Document
@@ -79,6 +80,7 @@ abstract class Document extends Node {
 		if($child instanceof Component){
 			$child->setParentNode($this->dom);
 		}
+
 		return $child;
 	}
 

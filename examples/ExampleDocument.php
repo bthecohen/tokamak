@@ -8,10 +8,13 @@ class ExampleDocument extends HTMLDocument
 
 	protected function render()
 	{
-		$body = $this->appendElement('html')
-			    ->appendComponent('Head', $this->data)
-				->appendElement('body', null);
-					$body->appendElement('h1', null, 'Test Document');
+		$data = $this->data;
+		$this->appendElement('html', null, '', function() use ($data){
+			$this->appendComponent('Head', $data);
+		})
+		->appendElement('body', null, '', function(){
+			$this->appendElement('h1', null, 'Test Document');
+		});;
 
 	}
 

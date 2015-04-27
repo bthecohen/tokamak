@@ -1,7 +1,8 @@
 <?php
 namespace Tokamak\Dom;
 
-use \DOMDocument;
+use DOMDocument;
+use Closure;
 
 /**
  * Class Element
@@ -93,6 +94,7 @@ class Element extends Node
 		if($child instanceof Component){
 			$child->setParentNode($this->node);
 		}
+
 		return $child;
 	}
 }

@@ -35,7 +35,7 @@ Then, you can pass in data/state when constructing an instance, and output it to
 
 ```PHP
 <?php
-$t = new SimpleTemplate(array('title' => 'Example Document');
+$t = new SimpleTemplate(array('title' => 'Example');
 echo $t->toString();
 ```
 
@@ -106,6 +106,33 @@ Now, we've abstracted the `<head>` element as a reusable component. Rendering th
 </html>
 ```
 
-### Limitations/Planned Changes
+### Closures
 
-* The current method-chaining/fluent interface always returns the last element or component in the chain. This is somewhat inconvenient, as it requires the use of intermediate variables. A future revision may implement the DSL using closures, similar to how React does it.
+In addition to method chaining, Tokamak supports using closures as callbacks in order to append multiple levels of elements with one method call. This is useful for adding multiple nodes to a child node, and obviates the need for assigning nodes to intermediate variables. The following example produces the same output as the above template:
+
+```PHP
+<?php
+
+use Tokamak\Dom\HTMLDocument;
+
+class ExampleDocumentWithClosures extends HTMLDocument
+{
+	protected function render()
+	{
+		$data = $this->data;
+		$this->appendElement('html', null, '', function() use ($data){
+			$this->appendComponent('Head', $data);
+		})
+		->appendElement('body', null, '', function(){
+			$this->appendElement('h1', null, 'Test Document');
+		});;
+
+	}
+}
+```
+
+Note in the above example that any data must be explicitly passed to the closure.
+
+## Limitations/Planned Features
+
+* I plan to implement selector methods to access descendant nodes.

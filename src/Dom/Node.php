@@ -1,9 +1,10 @@
 <?php
 namespace Tokamak\Dom;
 
-use \DOMDocument;
-use \DOMNode;
-use \SplQueue;
+use DOMDocument;
+use DOMNode;
+use SplQueue;
+use Closure;
 
 /**
  * Class Node
@@ -47,14 +48,21 @@ abstract class Node
 	/**
 	 * Syntactic sugar for constructing and then appending a new Element.
 	 * Abstracts away the need to pass the ancestor DOMDocument to the child.
-	 * @param string $name      The element name ('div', 'a', 'body', etc.)
+	 * @param string $name The element name ('div', 'a', 'body', etc.)
 	 * @param array $attributes Associative array of the element's attributes and their values.
 	 *                          For "class", the value can also be an array of class names.
-	 * @param string $content   The text content of the element.
-	 * @return Element          Returns the child Element for method chaining.
+	 * @param string $content The text content of the element.
+	 * @param Closure $callback A callback closure to be executed within the context of the child node.
+	 *                          Allows a callback-chaining style for building the DOM tree.
+	 * @return Element Returns the child Element for method chaining.
 	 */
-	public function appendElement($name, array $attributes = null, $content = ''){
-		return $this->append(new Element($this->dom, $name, $attributes, $content));
+	public function appendElement($name, array $attributes = null, $content = '',  Closure $callback = null){
+		$child = $this->append(new Element($this->dom, $name, $attributes, $content));
+		if(isset($callback)){
+			$boundCallback = $callback->bindTo($child, $child);
+			$boundCallback();
+		}
+		return $child;
 	}
 
 	/**
@@ -67,9 +75,11 @@ abstract class Node
 	 *                      or the name of a Component class in the Tokamak\Dom\Components namespace.
 	 * @param array $data   Array of arbitrary data/state to be passed to the component
 	 * @return Component    Returns the child Element for method chaining.
+	 * @param Closure $callback A callback closure to be executed within the context of the child node.
+	 *                          Allows a callback-chaining style for building the DOM tree.
 	 * @throws \RuntimeException Thrown if $name does not refer to a defined Component class.
 	 */
-	public function appendComponent($name, array $data = null)
+	public function appendComponent($name, array $data = null, Closure $callback = null)
 	{
 		if (is_a($name, 'Tokamak\Dom\Component', true)){
 			// The specified $name is a subclass of Component
@@ -81,7 +91,14 @@ abstract class Node
 		} else {
 			throw new \RuntimeException("Component $name not defined.");
 		}
-		return $this->append($component);
+		$child =  $this->append($component);
+
+		if(isset($callback)){
+			$boundCallback = $callback->bindTo($child, $child);
+			$boundCallback();
+		}
+
+		return $child;
 	}
 
 	/**
@@ -141,6 +158,11 @@ abstract class Node
 			return false;
 		}
 		return !$this->domNodes->isEmpty();
+	}
+
+	protected final function renderCallback(Closure $callback){
+		$boundCallback = $callback->bindTo($this, $this);
+		$boundCallback();
 	}
 
 	/**
