@@ -143,6 +143,10 @@ composer require tokamak/tokamak
 
 on the command line in your project directory.
 
+## Documentation
+
+Read the API documentation [here.](http://bthecohen.github.io/tokamak/documentation/api/)
+
 ## Limitations/Planned Features
 
 * I plan to implement selector methods to access descendant nodes.
