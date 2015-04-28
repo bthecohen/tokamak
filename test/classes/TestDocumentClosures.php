@@ -10,10 +10,10 @@ class TestDocumentClosures extends HTMLDocument
 	{
 		$this->appendElement('html', null, '', $data, function($data){
 			$this->appendComponent('TestComponent', $data);
-		})
-		->appendElement('body', null, '', null, function(){
-			$this->appendElement('h1', null, 'Test Document');
-		});;
+			$this->appendElement('body', null, '', null, function(){
+				$this->appendElement('h1', null, 'Test Document');
+			});
+		});
 	}
 
 }
