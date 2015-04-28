@@ -131,7 +131,7 @@ class ExampleDocumentWithClosures extends HTMLDocument
 }
 ```
 
-Any data to be passed into the closure is included in the fourth argument. You could also import a local variable into the closure's scope by using the syntax: `function() use ($foo){}`.
+Within the closure, `$this` will be correctly bound to the child element, allowing you to easily construct a DOM hierarchy. Any data to be passed into the closure is included in the fourth argument. You could also import a local variable into the closure's scope by using the syntax: `function() use ($foo){}`.
 
 ## Installation
 
