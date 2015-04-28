@@ -32,10 +32,10 @@ abstract class Document extends Node {
 
 	/**
 	 * Initialize the document by passing it data/state.
-	 * @param array $data
+	 * @param mixed $data
 	 * @param array $doctype
 	 */
-	public function __construct(array $data = null, array $doctype = null){
+	public function __construct($data = null, array $doctype = null){
 		$imp = new \DOMImplementation();
 
 		// Optionally, create a <!DOCTYPE> tag
@@ -49,10 +49,9 @@ abstract class Document extends Node {
 		$this->dom->encoding = static::$encoding;
 		$this->dom->version = static::$version;
 		$this->dom->formatOutput = true;
-		$this->data = $data;
 
 		// build the DOM
-		$this->render();
+		$this->render($data);
 	}
 
 	/**

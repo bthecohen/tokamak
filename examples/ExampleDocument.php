@@ -6,10 +6,9 @@ use Tokamak\Dom\HTMLDocument;
 class ExampleDocument extends HTMLDocument
 {
 
-	protected function render()
+	protected function render($data = null)
 	{
-		$data = $this->data;
-		$this->appendElement('html', null, '', function() use ($data){
+		$this->appendElement('html', null, '', function($data){
 			$this->appendComponent('Head', $data);
 		})
 		->appendElement('body', null, '', function(){

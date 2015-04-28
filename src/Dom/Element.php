@@ -54,8 +54,9 @@ class Element extends Node
 
 	/**
 	 * Builds the \DOMElement instance and adds it to the domNodes queue
+	 * @param mixed|null $data
 	 */
-	protected function render()
+	protected function render($data = null)
 	{
 		$element = $this->dom->createElement($this->name, $this->content);
 

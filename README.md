@@ -18,11 +18,11 @@ use Tokamak\Dom\HTMLDocument;
 class SimpleTemplate extends HTMLDocument
 {
 
-	protected function render()
+	protected function render($data)
 	{
 		$html = $this->appendElement('html');
 	        $head = $html->appendElement('head');
-				$head->appendElement('title', null, $this->data['title']); // data passed in via constructor
+				$head->appendElement('title', null, $data['title']); // data passed in via constructor
 			$h1 = $html->appendElement('body')
                             ->appendElement('h1', null, 'Test Document'); // supports method chaining
 
@@ -65,9 +65,9 @@ Much like a Document, you create a component by extending Tokamak's Component cl
 use Tokamak\Dom\Component
 
 class Head extends Component {
-	protected function render(){
+	protected function render($data){
 		$head = $this->appendElement('head');
-		$head->appendElement('title', null, $this->data['title']);
+		$head->appendElement('title', null, $data['title']);
 		$head->appendElement('meta', array('charset' => $this->dom->encoding));
 	}
 }
@@ -81,10 +81,10 @@ use Tokamak\Dom\HTMLDocument;
 class DocumentWithComponent extends HTMLDocument
 {
 
-	protected function render()
+	protected function render($data)
 	{
 		$body = $this->appendElement('html')
-			    ->appendComponent('Head', $this->data)
+			    ->appendComponent('Head', $data)
 				->appendElement('body', null);
 					$body->appendElement('h1', null, 'Test Document');
 
@@ -117,13 +117,13 @@ use Tokamak\Dom\HTMLDocument;
 
 class ExampleDocumentWithClosures extends HTMLDocument
 {
-	protected function render()
+	protected function render($data)
 	{
 		$data = $this->data;
-		$this->appendElement('html', null, '', function() use ($data){
+		$this->appendElement('html', null, '', $data, function($data) {
 			$this->appendComponent('Head', $data);
 		})
-		->appendElement('body', null, '', function(){
+		->appendElement('body', null, '', null, function(){
 			$this->appendElement('h1', null, 'Test Document');
 		});;
 
@@ -131,7 +131,7 @@ class ExampleDocumentWithClosures extends HTMLDocument
 }
 ```
 
-Note in the above example that any data must be explicitly passed to the closure.
+Any data to be passed into the closure is included in the fourth argument. You could also import a local variable into the closure's scope by using the syntax: `function() use ($foo){}`.
 
 ## Installation
 

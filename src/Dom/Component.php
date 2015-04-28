@@ -38,9 +38,8 @@ abstract class Component extends Node {
 	 */
 	public function __construct(DOMDocument $dom, array $data = null){
 		$this->dom = $dom;
-		$this->data = $data;
 
-		$this->render();
+		$this->render($data);
 	}
 
 	/**

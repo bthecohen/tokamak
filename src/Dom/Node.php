@@ -52,15 +52,16 @@ abstract class Node
 	 * @param array $attributes Associative array of the element's attributes and their values.
 	 *                          For "class", the value can also be an array of class names.
 	 * @param string $content The text content of the element.
+	 * @param mixed|null $data Arbitrary data to be passed to a closure
 	 * @param Closure $callback A callback closure to be executed within the context of the child node.
 	 *                          Allows a callback-chaining style for building the DOM tree.
 	 * @return Element Returns the child Element for method chaining.
 	 */
-	public function appendElement($name, array $attributes = null, $content = '',  Closure $callback = null){
+	public function appendElement($name, array $attributes = null, $content = '', $data = null, Closure $callback = null){
 		$child = $this->append(new Element($this->dom, $name, $attributes, $content));
 		if(isset($callback)){
 			$boundCallback = $callback->bindTo($child, $child);
-			$boundCallback();
+			$boundCallback($data);
 		}
 		return $child;
 	}
@@ -95,7 +96,7 @@ abstract class Node
 
 		if(isset($callback)){
 			$boundCallback = $callback->bindTo($child, $child);
-			$boundCallback();
+			$boundCallback($data);
 		}
 
 		return $child;
@@ -166,7 +167,7 @@ abstract class Node
 	 * of an element or component. Works by adding
 	 * nodes to the domNodes queue, either explicitly
 	 * or via calls to Node::append.
-	 * @return void
+	 * @param mixed $data Arbitrary data to be passed into the rendering function
 	 */
-	abstract protected function render();
+	abstract protected function render($data);
 }

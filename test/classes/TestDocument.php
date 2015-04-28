@@ -6,10 +6,10 @@ use Tokamak\Dom\HTMLDocument;
 class TestDocument extends HTMLDocument
 {
 
-	protected function render()
+	protected function render($data)
 	{
 		$body = $this->appendElement('html')
-			    ->appendComponent('TestComponent', $this->data)
+			    ->appendComponent('TestComponent', $data)
 				->appendElement('body', null);
 					$body->appendElement('h1', null, 'Test Document');
 	}

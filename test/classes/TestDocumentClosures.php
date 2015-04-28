@@ -6,13 +6,12 @@ use Tokamak\Dom\HTMLDocument;
 class TestDocumentClosures extends HTMLDocument
 {
 
-	protected function render()
+	protected function render($data)
 	{
-		$data = $this->data;
-		$this->appendElement('html', null, '', function() use ($data){
+		$this->appendElement('html', null, '', $data, function($data){
 			$this->appendComponent('TestComponent', $data);
 		})
-		->appendElement('body', null, '', function(){
+		->appendElement('body', null, '', null, function(){
 			$this->appendElement('h1', null, 'Test Document');
 		});;
 	}
