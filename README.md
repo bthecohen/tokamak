@@ -120,7 +120,7 @@ class ExampleDocumentWithClosures extends HTMLDocument
 	protected function render($data)
 	{
 		$this->appendElement('html', null, '', $data, function($data){
-            $this->appendComponent('TestComponent', $data);
+            $this->appendComponent('Head', $data);
             $this->appendElement('body', null, '', null, function(){
                 $this->appendElement('h1', null, 'Test Document');
             });
